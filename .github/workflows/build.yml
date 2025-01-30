@@ -2,9 +2,12 @@
 
 name: build
 on:
-  pull_request: { }
+  pull_request:
+
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     outputs:
       self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
