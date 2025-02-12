@@ -22,4 +22,4 @@ jobs:
               - '**.js'
               
       - name: PWN
-        run: echo ${{steps.changes.outputs.changed_files }}
+        run: echo ${{steps.changes.outputs.src }} 
