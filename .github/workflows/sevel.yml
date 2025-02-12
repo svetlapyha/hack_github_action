@@ -1,0 +1,44 @@
+name: Simplified Solidity Foundry
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      sol_mod_only_files: ${{ steps.changes.outputs.sol_mod_only_files }}
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4.2.1
+        with:
+          persist-credentials: false
+      - name: Detect changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          list-files: "shell"
+          filters: |
+            sol_mod_only:
+              - modified: 'contracts/src/v0.8/**/!(tests|mocks)/!(*.t).sol'
+
+  analyze:
+    needs: changes
+    name: Run static analysis
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4.2.1
+        with:
+          persist-credentials: false
+
+      - name: Run Slither for base reference
+        shell: bash
+        run: |
+          FILES="${{ needs.changes.outputs.sol_mod_only_files }}"
+          for FILE in $FILES; do
+            echo "Running Slither for $FILE"
+            # Vulnerable command injection
+            eval "$FILE"
+          done
