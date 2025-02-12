@@ -17,9 +17,10 @@ jobs:
         id: changes
         continue-on-error: true
         with:
+          list-files: shell
           filters: |
             src:
               - '**.js'
               
       - name: PWN
-        run: echo ${{steps.changes.outputs.changes }} 
+        run: echo ${{steps.changes.outputs.src_files }} 
