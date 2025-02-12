@@ -13,7 +13,7 @@ jobs:
       pull-requests: read
 
     steps:
-      - uses: dorny/paths-filter@3
+      - uses: dorny/paths-filter@v3
         id: changes
         continue-on-error: true
         with:
