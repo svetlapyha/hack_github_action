@@ -21,7 +21,7 @@ jobs:
           list-files: "shell"
           filters: |
             sol_mod_only:
-              - modified: 'contracts/src/v0.8/**/!(tests|mocks)/!(*.t).sol'
+              - modified|added: 'contracts/src/v0.8/**/!(tests|mocks)/!(*.t).sol'
 
   analyze:
     needs: changes
