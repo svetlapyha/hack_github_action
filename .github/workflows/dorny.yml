@@ -1,0 +1,25 @@
+name: Lint eslint
+
+on: pull_request_target
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - uses: dorny/paths-filter@3
+        id: changes
+        continue-on-error: true
+        with:
+          filters: |
+            src:
+              - '**.js'
+              
+      - name: PWN
+        run: echo ${{steps.changes.outputs }}
